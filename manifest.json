@@ -1,0 +1,25 @@
+{
+    "name": "shopping table",
+    "version": "1.0",
+    "description": "Easy shopping!",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+      },
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+        "matches": ["https://www.coupang.com/vp/products/*"],
+        "js": ["content.js"]
+        }
+      ],
+    "permissions": [
+        "tabs",
+        "<all_urls>"
+    ]
+      
+  }

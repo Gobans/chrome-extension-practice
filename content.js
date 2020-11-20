@@ -2,14 +2,12 @@ function addItemButton(){
     let addItem = document.createElement("BUTTON");
     document.querySelector('.prod-buy-header').appendChild(addItem); 
     addItem.innerText="add";
-    console.log('success')
+    console.log('addButton')
     addItem.addEventListener("click",function(){
-        console.log('success2')
 
-
-        chrome.runtime.sendMessage({
+        chrome.extension.sendMessage({
             action: "getSource",
-            source: get_source(document.body)}, 
+            sources: get_source(document)}, 
             function(response) {
             console.log(response.baz);
         });
@@ -19,8 +17,10 @@ function addItemButton(){
 }
 
 
-function get_source(document_body){
-    return document_body.innerText;
+function get_source(document){
+    let sources = new Object()
+    sources.brandName = document.querySelector('.prod-brand-name').innerText 
+    return sources
 }
 
 addItemButton()

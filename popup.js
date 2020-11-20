@@ -1,10 +1,34 @@
-chrome.runtime.onMessage.addListener(function(request, sender) {
-    if (request.action == "getSource") {
-        document.body.innerText = request.source;
-        console.log('handler')
+let count= 0
+
+chrome.extension.onMessage.addListener(function(request, sender) {
+    console.log(request)
+    if (request.action == "saveSource") {
+        count = request.count;
+        console.log(count)
     }
 });
+
+function onWindowLoad() {
+
+
+    let keys = ["brandName"]
  
+    chrome.storage.local.get(keys, function(items) {
+        for(let index in keys){
+            let source = items[keys[index]]
+            document.body.innerText = source;
+        }
+    });
+
+
+    
+
+}
+
+window.onload = onWindowLoad;
+
+
+
 
 
 
@@ -48,9 +72,5 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     //     }
     // });
 
-    // function onWindowLoad() {
 
-
-
-    // }
-    // window.onload = onWindowLoad;
+ 

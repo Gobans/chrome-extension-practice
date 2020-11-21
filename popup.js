@@ -1,28 +1,33 @@
-let count= 0
-
-chrome.extension.onMessage.addListener(function(request, sender) {
-    console.log(request)
-    if (request.action == "saveSource") {
-        count = request.count;
-        console.log(count)
-    }
-});
+let counts= 0
 
 function onWindowLoad() {
 
 
-    let keys = ["brandName"]
- 
-    chrome.storage.local.get(keys, function(items) {
-        for(let index in keys){
-            let source = items[keys[index]]
-            document.body.innerText = source;
-        }
+    let keys = ["brandName","TEST"]
+     
+    chrome.storage.local.get("count", function(count) {
+        let tempCount= count.count
+        console.log(tempCount)
+        chrome.storage.local.get("sources", function(sources) {
+            if (count == tempCount){
+                
+            }else{
+                console.log(sources)
+                for(let i = counts; i<tempCount; i++){
+                    for(let index in keys){
+                        let sourceList = sources.sources
+                        let source = sourceList[i][keys[index]]
+                        document.body.innerText = source;
+
+                        //받은 데이터들 분류해서 처리
+                        console.log(source)
+                    }
+                }
+                count = tempCount
+            }
+
+        });
     });
-
-
-    
-
 }
 
 window.onload = onWindowLoad;

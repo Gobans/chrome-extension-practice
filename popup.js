@@ -3,7 +3,7 @@ let counts= 0
 function onWindowLoad() {
 
 
-    let keys = ["brandName","TEST"]
+    let keys = ["category","productName","imageSrc","productPrice"]
      
     chrome.storage.local.get("count", function(count) {
         let tempCount= count.count
@@ -17,10 +17,24 @@ function onWindowLoad() {
                     for(let index in keys){
                         let sourceList = sources.sources
                         let source = sourceList[i][keys[index]]
-                        document.body.innerText = source;
+                        console.log(index)
+                        switch(keys[index]){
+                            case "category":
+                                document.querySelector('#category > p').append('\n'+source)
+                                break
+                            case "productName":
+                                document.querySelector('#productname > p').append('\n'+source)
+                                break
+                            case "imageSrc":
+                                document.querySelector('#productimage > img').src = source
+                                break
+                            case "productPrice":
+                                document.querySelector('#productprice > p').append('\n'+source)
+                                break
+                        }
 
-                        //받은 데이터들 분류해서 처리
-                        console.log(source)
+                        //카테고리 분류하고 category 키에 배열을 값으로 추가. 배열안에 i값을 저장(삭제할 때 필요)
+
                     }
                 }
                 count = tempCount

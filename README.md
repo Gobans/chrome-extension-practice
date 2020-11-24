@@ -1,4 +1,4 @@
-# shopping-table
+# Shopping-table
 
 Developer: Gobans
 

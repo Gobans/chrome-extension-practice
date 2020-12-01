@@ -1,12 +1,3 @@
-// chrome.runtime.onMessage.addListener(function(request, sender,sendResponse) {
-//     if (request.action == "getSource") {
-//         document.body.innerText = request.source;
-//     }
-//     if (request.action == "addItemButton"){
-//         console.log('gg')
-//     }
-// });
-
 let count = 0
 let sources = []
 

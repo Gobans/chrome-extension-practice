@@ -5,7 +5,7 @@ function addItemButton(){
     console.log('addButton')
     addItem.addEventListener("click",function(){
 
-        chrome.extension.sendMessage({
+        chrome.runtime.sendMessage({
             action: "getSource",
             sources: get_source(document)}, 
             function(response) {

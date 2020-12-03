@@ -5,12 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body{width: 520px; min-height: 520px;}
+        body{width: 550px; min-height: 520px;}
         .container{
             /* js로 추가해도 css 여기서 제어 가능 */
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            margin: 10px;
+            text-align: center;
+        }
+        .product{
+            margin-right: 10px;
         }
 
-
+        .item { 
+            flex: 0 0 auto;  
+        }
+        .category{
+            margin-bottom: 10px;
+            text-align: left;
+            min-height: 16px;
+        }
+        .productName{
+            width: 155px;
+            height: 48px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .imageSrc{
+            align-items: center;
+        }
     </style>
     <script src="popup.js"></script>
 </head>

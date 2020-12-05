@@ -1,8 +1,7 @@
-let count = 0
-let sources = []
-
 chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
+    async function(request, sender, sendResponse) {
+        let count = await getCount()
+        let sources = await getSources()
         if (request.action == "getSource") {
             let items = {
                 "category":request.sources.category, 
@@ -12,15 +11,12 @@ chrome.runtime.onMessage.addListener(
             }
             count +=1
             sources.push(items)
-            chrome.storage.local.set({"sources": sources}, function() {
+            chrome.storage.sync.set({"sources": sources}, function() {
                 // 콜백
             });
-            chrome.storage.local.set({"count": count}, function() {
+            chrome.storage.sync.set({"count": count}, function() {
                 // 콜백
             });
-
-
-            sendResponse({baz: "getSource"})
         }
         else if(request.action == "removeProduct"){
             for(let i = request.index; i<count; i++){
@@ -31,14 +27,43 @@ chrome.runtime.onMessage.addListener(
                 }
             }
             count -=1
-            chrome.storage.local.set({"sources": sources}, function() {
+            chrome.storage.sync.set({"sources": sources}, function() {
                 // 콜백
             });
-            chrome.storage.local.set({"count": count}, function() {
+            chrome.storage.sync.set({"count": count}, function() {
                 // 콜백
             });
 
         }
     });
     
+
+
+async function getCount(){
+    let c = new Promise(function(resolve, reject){
+        chrome.storage.sync.get("count", function(count) {
+            if(Object.keys(count).length != 0){
+                resolve(count.count);
+            }else{
+                resolve(0);
+            }
+        })
+    });
+    let count = await c
+    return count
+}
+
+async function getSources(){
+    let s = new Promise(function(resolve, reject){
+        chrome.storage.sync.get("sources", function(sources) {
+            if(Object.keys(sources).length != 0){
+                resolve(sources.sources)
+            }else{
+                resolve([])
+            }
+        })
+    });
     
+    let sources = await s
+    return sources
+}

@@ -7,10 +7,8 @@ function onWindowLoad() {
             let count = await getCount()
             let sources = await getSources()
             if (count != tempCount){
-                console.log(count)
-                console.log(tempCount)
                 for(let index = tempCount; index < count; index ++){
-                    let categories =document.querySelectorAll('.category')
+                    let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
                     let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
                     if (existCategory){
                         let product = await sortAppend(index,sources)
@@ -30,8 +28,7 @@ function onWindowLoad() {
                     }
 
                 }
-                console.log(count)
-                console.log(tempCount)
+
             }
 
 
@@ -43,7 +40,7 @@ window.onload = onWindowLoad;
 
 async function getCount(){
     let c = new Promise(function(resolve, reject){
-        chrome.storage.local.get("count", function(count) {
+        chrome.storage.sync.get("count", function(count) {
             resolve(count.count);
         })
     });
@@ -53,7 +50,7 @@ async function getCount(){
 
 async function getSources(){
     let s = new Promise(function(resolve, reject){
-        chrome.storage.local.get("sources", function(sources) {
+        chrome.storage.sync.get("sources", function(sources) {
             resolve(sources);
         })
     });

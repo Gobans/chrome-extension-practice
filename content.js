@@ -7,10 +7,8 @@ function addItemButton(){
 
         chrome.runtime.sendMessage({
             action: "getSource",
-            sources: get_source(document)}, 
-            function(response) {
-            console.log(response.baz);
-        });
+            sources: get_source(document)}
+        );
 
 
     })

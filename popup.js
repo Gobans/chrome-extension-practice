@@ -6,29 +6,32 @@ function onWindowLoad() {
         (async function fetchPopup(){
             let count = await getCount()
             let sources = await getSources()
-            console.log(sources)
             if (count != tempCount){
                 console.log(count)
                 console.log(tempCount)
                 for(let index = tempCount; index < count; index ++){
                     let categories =document.querySelectorAll('.category')
-                    console.log(categories)
                     let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
-                    console.log(existCategory)
                     if (existCategory){
                         let product = await sortAppend(index,sources)
                         product.firstChild.innerText = ""
                         parentCategory.parentNode.append(product)
                         //카테고리는 따로 뺴서 추가해야 할 것 같다.
+                        addRemoveButton(product,index) //삭제 버튼추가
+
                     }else{
                         let product = await sortAppend(index,sources)
                         let container = document.createElement('div')
                         container.classList.add('container')
                         container.appendChild(product)
                         document.body.append(container)
-                        tempCount =count
+
+                        addRemoveButton(product,index) //삭제 버튼추가
                     }
+
                 }
+                console.log(count)
+                console.log(tempCount)
             }
 
 
@@ -63,14 +66,12 @@ async function getCategory(index,categories,sources){
     let existCategory = false
     let parentCategory = null
     for(let i in categories){
-        console.log(categories[i])
         if (categories[i].innerText == sources.sources[index].category){
             parentCategory = categories[i].parentNode
             existCategory = true
             break
         }
     }
-    console.log(existCategory)
     return [existCategory,parentCategory]
 }
 
@@ -122,4 +123,22 @@ async function getCategory(index,categories,sources){
         return product
     }
 
+function addRemoveButton(product,index){
+    let removeButton = document.createElement('button')
+    removeButton.addEventListener("click",function(){
+        removeProduct(product,index)
+    })
+    removeButton.innerText = "remove"
+    product.appendChild(removeButton)
+}
 
+
+function removeProduct(product,index){
+    chrome.runtime.sendMessage({
+        action: "removeProduct",
+        index : index }, 
+        function(response) {
+        product.parentNode.removeChild(product)
+    });
+
+}

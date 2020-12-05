@@ -1,35 +1,43 @@
 let keys = ["category","productName","imageSrc","productPrice"]
-let tempCount = 0
+
 
 
 function onWindowLoad() {
         (async function fetchPopup(){
             let count = await getCount()
             let sources = await getSources()
-            if (count != tempCount){
-                for(let index = tempCount; index < count; index ++){
-                    let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
-                    let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
-                    if (existCategory){
-                        let product = await sortAppend(index,sources)
-                        product.firstChild.innerText = ""
-                        parentCategory.parentNode.append(product)
-                        //카테고리는 따로 뺴서 추가해야 할 것 같다.
-                        addRemoveButton(product,index) //삭제 버튼추가
+            for(let index = 0; index < count; index ++){
+                let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
+                let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
+                if (existCategory){ //이미 동일한 카테고리가 존재할 떄
+                    let product = await sortAppend(index,sources)
+                    product.removeChild(product.firstChild)
+                    parentCategory.firstChild.nextSibling.append(product)
+                    //카테고리는 따로 뺴서 추가해야 할 것 같다.
+                    addRemoveButton(product,index) //삭제 버튼추가
 
-                    }else{
-                        let product = await sortAppend(index,sources)
-                        let container = document.createElement('div')
-                        container.classList.add('container')
-                        container.appendChild(product)
-                        document.body.append(container)
+                }else{
+                    let product = await sortAppend(index,sources)
+                    let container = document.createElement('div')
+                    container.classList.add('container')
 
-                        addRemoveButton(product,index) //삭제 버튼추가
-                    }
+                    //카테고리 따로 빼기
+                    let category  = product.firstChild
+                    container.appendChild(category)
 
+                    let productBox = document.createElement('div')
+                    productBox.classList.add('productBox')
+                    
+                    productBox.appendChild(product)
+                    container.appendChild(productBox)
+                    document.body.append(container)
+
+                    addRemoveButton(product,index) //삭제 버튼추가
                 }
 
             }
+
+            
 
 
         }())
@@ -135,7 +143,13 @@ function removeProduct(product,index){
         action: "removeProduct",
         index : index }, 
         function(response) {
-        product.parentNode.removeChild(product)
+            console.log(product.parentNode.childElementCount)
+            console.log(product.parentNode.parentNode)
+        if(product.parentNode.childElementCount == 1){
+            document.body.removeChild(product.parentNode.parentNode)
+        }else{
+            product.parentNode.removeChild(product)
+        }
     });
 
 }

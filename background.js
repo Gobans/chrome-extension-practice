@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener(
             });
         }
         else if(request.action == "removeProduct"){
+            console.log(request.index)
             for(let i = request.index; i<count; i++){
                 if(i == count-1){
                     sources.pop()
@@ -34,6 +35,8 @@ chrome.runtime.onMessage.addListener(
                 // 콜백
             });
 
+            console.log(sources)
+            console.log(count)
         }
     });
     

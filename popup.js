@@ -1,4 +1,4 @@
-let keys = ["category","productName","imageSrc","productPrice"]
+let keys = ["category","productName","imageSrc","productPrice","productUrl"]
 
 
 
@@ -116,6 +116,10 @@ async function getCategory(index,categories,sources){
                 case "productPrice":
                     productPrice.append('\n'+source)
                     break
+                case "productUrl":
+                    imageSrc.addEventListener("click",function(){
+                        chrome.tabs.create({ url: source });
+                    })
             }
         }
 

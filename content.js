@@ -22,6 +22,8 @@ function get_source(document){
     sources.productName = document.querySelector('div.prod-buy-header > h2').innerText
     sources.imageSrc = document.querySelector('#repImageContainer > img').src
     sources.productPrice = document.querySelector('span.total-price > strong').innerText
+    sources.productPrice = document.querySelector('span.total-price > strong').innerText
+
     //쿠팡 와우, 회원가 나눠서 보여줘야할듯
 
     return sources

@@ -3,12 +3,15 @@ chrome.runtime.onMessage.addListener(
         let count = await getCount()
         let sources = await getSources()
         if (request.action == "getSource") {
+            let productUrl = await getUrl()
             let items = {
                 "category":request.sources.category, 
                 "productName":request.sources.productName,
                 "imageSrc":request.sources.imageSrc,
-                "productPrice":request.sources.productPrice
+                "productPrice":request.sources.productPrice,
+                "productUrl":productUrl
             }
+            console.log(productUrl)
             count +=1
             sources.push(items)
             chrome.storage.sync.set({"sources": sources}, function() {
@@ -69,4 +72,16 @@ async function getSources(){
     
     let sources = await s
     return sources
+}
+
+async function getUrl(){
+    let s = new Promise(function(resolve, reject){
+        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+            resolve(tabs[0].url)
+            // use `url` here inside the callback because it's asynchronous!
+        });
+    });
+    
+    let productUrl = await s
+    return productUrl
 }

@@ -1,12 +1,16 @@
 let keys = ["category","productName","imageSrc","productPrice","productUrl"]
-
+let removeCount = 0
 
 
 function onWindowLoad() {
         (async function fetchPopup(){
             let count = await getCount()
             let sources = await getSources()
-            for(let index = 0; index < count; index ++){
+
+            console.log("popup count: "+ count)
+            console.log("popup sources: "+ sources)
+
+            for(let index = 1; index <= count; index ++){
                 let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
                 let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
                 if (existCategory){ //이미 동일한 카테고리가 존재할 떄
@@ -145,15 +149,18 @@ function addRemoveButton(product,index){
 function removeProduct(product,index){
     chrome.runtime.sendMessage({
         action: "removeProduct",
-        index : index }, 
+        index : index,
+        removeCount : removeCount,
+    }, 
         function(response) {
             console.log(product.parentNode.childElementCount)
             console.log(product.parentNode.parentNode)
-        if(product.parentNode.childElementCount == 1){
-            document.body.removeChild(product.parentNode.parentNode)
-        }else{
-            product.parentNode.removeChild(product)
-        }
+            removeCount +=1
+            if(product.parentNode.childElementCount == 1){
+                document.body.removeChild(product.parentNode.parentNode)
+            }else{
+                product.parentNode.removeChild(product)
+            }
     });
 
 }

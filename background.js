@@ -2,6 +2,9 @@ chrome.runtime.onMessage.addListener(
     async function(request, sender, sendResponse) {
         let count = await getCount()
         let sources = await getSources()
+
+        console.log("background count:" + count)
+
         if (request.action == "getSource") {
             let productUrl = await getUrl()
             let items = {
@@ -23,13 +26,15 @@ chrome.runtime.onMessage.addListener(
         }
         else if(request.action == "removeProduct"){
             console.log(request.index)
-            for(let i = request.index; i<count; i++){
-                if(i == count-1){
+            for(let i = request.index - request.removeCount; i<=count; i++){
+                if(i == count){
                     sources.pop()
                 }else{
                     sources[i] = sources[i+1]
                 }
             }
+    
+
             count -=1
             chrome.storage.sync.set({"sources": sources}, function() {
                 // 콜백
@@ -65,7 +70,7 @@ async function getSources(){
             if(Object.keys(sources).length != 0){
                 resolve(sources.sources)
             }else{
-                resolve([])
+                resolve([0])
             }
         })
     });

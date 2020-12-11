@@ -22,6 +22,9 @@
         "tabs",
         "<all_urls>",
         "storage"
+    ],
+    "web_accessible_resources": [
+      "image/*.png", "image/*.jpg"
     ]
       
   }

@@ -1,8 +1,12 @@
 function addItemButton(){
     let addItem = document.createElement("BUTTON");
-    document.querySelector('.prod-buy-header').appendChild(addItem); 
+    addItem.classList.add('prod-buy-btn')
     addItem.innerText="add";
+    document.querySelector('.prod-buy-header').appendChild(addItem); 
+
+    
     console.log('addButton')
+    
     addItem.addEventListener("click",function(){
 
         chrome.runtime.sendMessage({

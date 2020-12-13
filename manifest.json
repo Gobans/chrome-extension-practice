@@ -1,7 +1,7 @@
 {
     "name": "shopping table",
     "version": "1.0",
-    "description": "Easy shopping!",
+    "description": "Easy shopping on coupang!",
     "manifest_version": 2,
     "browser_action": {
         "default_icon": "icon.png",
@@ -18,13 +18,7 @@
         }
       ],
     "permissions": [
-        "activeTab",
-        "tabs",
-        "<all_urls>",
+        "https://www.coupang.com/vp/products/*",
         "storage"
-    ],
-    "web_accessible_resources": [
-      "image/*.png", "image/*.jpg"
-    ]
-      
+    ] 
   }

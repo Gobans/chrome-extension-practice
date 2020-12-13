@@ -1,7 +1,7 @@
 function addItemButton(){
     let addItem = document.createElement("BUTTON");
-    addItem.classList.add('prod-buy-btn')
-    addItem.innerText="add";
+    addItem.setAttribute("style","background-color:#1F90E6; border-radius:10px; color:white; border:none; font-size: 18px")
+    addItem.innerText="Add";
     document.querySelector('.prod-buy-header').appendChild(addItem); 
 
     
@@ -11,7 +11,9 @@ function addItemButton(){
 
         chrome.runtime.sendMessage({
             action: "getSource",
-            sources: get_source(document)}
+            sources: get_source(document)},function(response){
+                alert('Successfully added to cart!')
+            }
         );
 
 

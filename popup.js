@@ -10,36 +10,48 @@ function onWindowLoad() {
             console.log("popup count: "+ count)
             console.log("popup sources: "+ sources)
 
-            for(let index = 1; index <= count; index ++){
-                let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
-                let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
-                if (existCategory){ //이미 동일한 카테고리가 존재할 떄
-                    let product = await sortAppend(index,sources)
-                    product.removeChild(product.firstChild)
-                    parentCategory.firstChild.nextSibling.append(product)
-                    //카테고리는 따로 뺴서 추가해야 할 것 같다.
-                    addRemoveButton(product,index) //삭제 버튼추가
+            if(count == 0){
+                //카트에 아이템을 넣어달라는 표시
+                let guide = document.createElement('div')
+                guide.classList.add('guide')
+                guide.innerText = "There is no products that you added.\n Please add a product on page :)"
+                document.body.appendChild(guide)
 
-                }else{
-                    let product = await sortAppend(index,sources)
-                    let container = document.createElement('div')
-                    container.classList.add('container')
-
-                    //카테고리 따로 빼기
-                    let category  = product.firstChild
-                    container.appendChild(category)
-
-                    let productBox = document.createElement('div')
-                    productBox.classList.add('productBox')
-                    
-                    productBox.appendChild(product)
-                    container.appendChild(productBox)
-                    document.body.append(container)
-
-                    addRemoveButton(product,index) //삭제 버튼추가
+            }else{
+                for(let index = 1; index <= count; index ++){
+                    let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
+                    let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
+                    if (existCategory){ //이미 동일한 카테고리가 존재할 떄
+                        let product = await sortAppend(index,sources)
+                        product.removeChild(product.firstChild)
+                        parentCategory.firstChild.nextSibling.append(product)
+    
+                        addRemoveButton(product,index) //삭제 버튼추가
+    
+                    }else{ // 동일한 카테고리가 없을 떄
+                        let product = await sortAppend(index,sources)
+                        let container = document.createElement('div')
+    
+                        container.classList.add('container')
+    
+                        //카테고리 따로 빼기
+                        let category  = product.firstChild
+                        container.appendChild(category)
+    
+                        let productBox = document.createElement('div')
+                        productBox.classList.add('productBox')
+                        
+                        productBox.appendChild(product)
+                        container.appendChild(productBox)
+                        document.body.append(container)
+    
+                        addRemoveButton(product,index) //삭제 버튼추가
+                    }
+    
                 }
-
             }
+
+            
 
             
 
@@ -138,6 +150,7 @@ async function getCategory(index,categories,sources){
 
 function addRemoveButton(product,index){
     let removeButton = document.createElement('button')
+    removeButton.classList.add('removebtn')
     removeButton.addEventListener("click",function(){
         removeProduct(product,index)
     })

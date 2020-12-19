@@ -2,12 +2,18 @@
 
 Developer: Gobans
 
+Google webstore : https://chrome.google.com/webstore/detail/shopping-table/kbiolclnojgjpnkhflpakamkpnakpdbm?hl=ko
+
 
 # Description
 
 It is a Google extension program that makes it easier to compare products of the same category in shopping malls.
 
 We are currently developing it for use in Coupang.
+
+# Run
+
+![k77Bh9aVXM](https://user-images.githubusercontent.com/56781342/102679661-88ed2280-41f4-11eb-85a5-9caff9ecead6.gif)
 
 
 # Program diagram

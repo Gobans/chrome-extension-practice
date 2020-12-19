@@ -27,8 +27,11 @@ function get_source(document){
     sources.brandName = document.querySelector('.prod-brand-name').innerText
     sources.productName = document.querySelector('div.prod-buy-header > h2').innerText
     sources.imageSrc = document.querySelector('#repImageContainer > img').src
-    sources.productPrice = document.querySelector('span.total-price > strong').innerText
-    sources.productPrice = document.querySelector('span.total-price > strong').innerText
+    let prices = document.querySelectorAll('span.total-price > strong')
+    sources.coupangPrice = prices[0].innerText
+    if(prices[1] != undefined) sources.wowPrice = prices[1].innerText
+    else sources.wowPrice = null
+
 
     //쿠팡 와우, 회원가 나눠서 보여줘야할듯
 

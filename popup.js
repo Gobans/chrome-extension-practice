@@ -1,4 +1,4 @@
-let keys = ["category","productName","imageSrc","productPrice","productUrl"]
+let keys = ["category","productName","imageSrc","coupangPrice","wowPrice","productUrl"]
 let removeCount = 0
 
 
@@ -106,14 +106,16 @@ async function getCategory(index,categories,sources){
         productName.classList.add('productName')
         let imageSrc  = document.createElement('div')
         imageSrc.classList.add('imageSrc')
-        let productPrice  = document.createElement('div')
-        productPrice.classList.add('productPrice')
+        let coupangPrice  = document.createElement('div')
+        coupangPrice.classList.add('coupangPrice')
+        let wowPrice  = document.createElement('div')
+        wowPrice.classList.add('wowPrice')
 
 
         for(let index in keys){
             let sourceList = sources.sources
             let source = sourceList[i][keys[index]]
-            
+            console.log(sourceList)
             switch(keys[index]){
                 case "category":
                     category.append('\n'+source)
@@ -129,9 +131,11 @@ async function getCategory(index,categories,sources){
                     
                     imageSrc.append(img)
                     break
-                case "productPrice":
-                    productPrice.append('\n'+source)
+                case "coupangPrice":
+                    coupangPrice.append('\n'+source)
                     break
+                case "wowPrice":
+                    if(source !=null && source != "원") wowPrice.append('\n'+source + " (와우)")
                 case "productUrl":
                     imageSrc.addEventListener("click",function(){
                         chrome.tabs.create({ url: source });
@@ -142,9 +146,10 @@ async function getCategory(index,categories,sources){
         product.appendChild(category)
         product.appendChild(productName)
         product.appendChild(imageSrc)
-        product.appendChild(productPrice)
+        product.appendChild(coupangPrice)
+        product.appendChild(wowPrice)
         //카테고리 분류하고 category 키에 배열을 값으로 추가. 배열안에 i값을 저장(삭제할 때 필요)
-
+        console.log(product)
         return product
     }
 

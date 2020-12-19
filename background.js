@@ -11,10 +11,11 @@ chrome.runtime.onMessage.addListener(
                 "category":request.sources.category, 
                 "productName":request.sources.productName,
                 "imageSrc":request.sources.imageSrc,
-                "productPrice":request.sources.productPrice,
+                "coupangPrice":request.sources.coupangPrice,
+                "wowPrice":request.sources.wowPrice,
                 "productUrl":productUrl
             }
-            console.log(productUrl)
+            console.log(items)
             count +=1
             sources.push(items)
             chrome.storage.sync.set({"sources": sources}, function() {

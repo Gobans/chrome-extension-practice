@@ -47,6 +47,16 @@ chrome.runtime.onMessage.addListener(
             console.log(sources)
             console.log(count)
         }
+        else if(request.action == "removeAll"){
+            sources = [0]
+            count = 0
+            chrome.storage.sync.set({"sources": sources}, function() {
+                // 콜백
+            });
+            chrome.storage.sync.set({"count": count}, function() {
+                // 콜백
+            });
+        }
     });
     
 

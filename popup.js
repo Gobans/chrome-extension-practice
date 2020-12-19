@@ -18,6 +18,7 @@ function onWindowLoad() {
                 document.body.appendChild(guide)
 
             }else{
+                addRemoveAllButton()
                 for(let index = 1; index <= count; index ++){
                     let categories =document.querySelectorAll('.category') //카테고리 전체 가져오기
                     let [existCategory, parentCategory] = await getCategory(index,categories,sources) // 원래 있는 카테고리 인지 확인
@@ -62,6 +63,8 @@ function onWindowLoad() {
 
 window.onload = onWindowLoad;
 
+/* get product sources */
+
 async function getCount(){
     let c = new Promise(function(resolve, reject){
         chrome.storage.sync.get("count", function(count) {
@@ -95,6 +98,8 @@ async function getCategory(index,categories,sources){
     }
     return [existCategory,parentCategory]
 }
+
+/* create product box */
 
  async function sortAppend(i,sources){
 
@@ -153,6 +158,8 @@ async function getCategory(index,categories,sources){
         return product
     }
 
+/* remove product button */
+
 function addRemoveButton(product,index){
     let removeButton = document.createElement('button')
     removeButton.classList.add('removebtn')
@@ -182,3 +189,29 @@ function removeProduct(product,index){
     });
 
 }
+
+/* remove all button */
+
+function addRemoveAllButton(){
+    let removeButton = document.createElement('button')
+    removeButton.classList.add('remove-all-btn')
+    removeButton.addEventListener("click",function(){
+        removeAll()
+    })
+    removeButton.innerText = "Remove all"
+    document.body.appendChild(removeButton)
+}
+
+function removeAll(){
+    chrome.runtime.sendMessage({
+        action: "removeAll",
+    },
+    function(response) {
+        while (document.body.hasChildNodes() ) { 
+            document.body.removeChild( document.body.firstChild ); 
+        }
+    
+    })
+
+}
+

@@ -159,7 +159,15 @@ async function getCategory(index,categories,sources){
                             wow_img.style['maxWidth'] = '56px'
                             wow_img.style['maxHeight'] = '14px'
                             coupangPrice.append(wow_img)
-                        }else if(source == "https://image7.coupangcdn.com/image/mobile_app/v3/brandsdp/loyalty/pc/rocket-fresh@2x.png"){
+                        }else if(isWow && source == "https://image7.coupangcdn.com/image/mobile_app/v3/brandsdp/loyalty/pc/rocket-fresh@2x.png"){
+                            let fresh_img = document.createElement('img'); 
+                            fresh_img.src = chrome.runtime.getURL("image/fresh_logo.png");
+                            fresh_img.style['maxWidth'] = '56px'
+                            fresh_img.style['maxHeight'] = '14px'
+                            wowPrice.removeChild(wowPrice.firstChild.nextSibling)
+                            wowPrice.append(fresh_img)
+                        }
+                        else if(source == "https://image7.coupangcdn.com/image/mobile_app/v3/brandsdp/loyalty/pc/rocket-fresh@2x.png"){
                             let fresh_img = document.createElement('img'); 
                             fresh_img.src = chrome.runtime.getURL("image/fresh_logo.png");
                             fresh_img.style['maxWidth'] = '56px'

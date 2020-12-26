@@ -151,6 +151,7 @@ async function getCategory(index,categories,sources){
                         wowPrice.append(wow_img)
                         isWow = true
                     }
+                    break
                 case "badge":
                     if(source != null){
                         if(source == "https://image10.coupangcdn.com/image/badges/rocket/rocket_logo.png"&& isWow == false){
@@ -176,10 +177,13 @@ async function getCategory(index,categories,sources){
                         }
                        
                     }
+                    break
                 case "productUrl":
+                    console.log(source)
                     imageSrc.addEventListener("click",function(){
                         chrome.tabs.create({ url: source });
                     })
+                    break
                     
             }
         }

@@ -13,6 +13,7 @@ chrome.runtime.onMessage.addListener(
                 "imageSrc":request.sources.imageSrc,
                 "coupangPrice":request.sources.coupangPrice,
                 "wowPrice":request.sources.wowPrice,
+                "badge":request.sources.badge,
                 "productUrl":productUrl
             }
             console.log(items)

@@ -1,4 +1,4 @@
-let keys = ["category","productName","imageSrc","coupangPrice","wowPrice","productUrl"]
+let keys = ["category","productName","imageSrc","coupangPrice","wowPrice","badge","productUrl"]
 let removeCount = 0
 
 
@@ -116,6 +116,8 @@ async function getCategory(index,categories,sources){
         let wowPrice  = document.createElement('div')
         wowPrice.classList.add('wowPrice')
 
+        isWow = false
+
 
         for(let index in keys){
             let sourceList = sources.sources
@@ -137,14 +139,40 @@ async function getCategory(index,categories,sources){
                     imageSrc.append(img)
                     break
                 case "coupangPrice":
-                    coupangPrice.append('\n'+source)
+                    coupangPrice.append('\n'+source+" ")
                     break
                 case "wowPrice":
-                    if(source !=null && source != "원") wowPrice.append('\n'+source + " (와우)")
+                    if(source !=null && source != "원"){
+                        wowPrice.append('\n'+source + " ")
+                        let wow_img = document.createElement('img'); 
+                        wow_img.src = chrome.runtime.getURL("image/rocket_logo.png");
+                        wow_img.style['maxWidth'] = '56px'
+                        wow_img.style['maxHeight'] = '14px'
+                        wowPrice.append(wow_img)
+                        isWow = true
+                    }
+                case "badge":
+                    if(source != null){
+                        if(source == "https://image10.coupangcdn.com/image/badges/rocket/rocket_logo.png"&& isWow == false){
+                            let wow_img = document.createElement('img'); 
+                            wow_img.src = chrome.runtime.getURL("image/rocket_logo.png");
+                            wow_img.style['maxWidth'] = '56px'
+                            wow_img.style['maxHeight'] = '14px'
+                            coupangPrice.append(wow_img)
+                        }else if(source == "https://image7.coupangcdn.com/image/mobile_app/v3/brandsdp/loyalty/pc/rocket-fresh@2x.png"){
+                            let fresh_img = document.createElement('img'); 
+                            fresh_img.src = chrome.runtime.getURL("image/fresh_logo.png");
+                            fresh_img.style['maxWidth'] = '56px'
+                            fresh_img.style['maxHeight'] = '14px'
+                            coupangPrice.append(fresh_img)
+                        }
+                       
+                    }
                 case "productUrl":
                     imageSrc.addEventListener("click",function(){
                         chrome.tabs.create({ url: source });
                     })
+                    
             }
         }
 

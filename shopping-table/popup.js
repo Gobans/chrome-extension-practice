@@ -41,6 +41,9 @@ function onWindowLoad() {
     
                         let productBox = document.createElement('div')
                         productBox.classList.add('productBox')
+                        productBox.setAttribute("droppable","true")
+                        productBox.addEventListener('ondrop',drop,false)
+
                         
                         productBox.appendChild(product)
                         container.appendChild(productBox)
@@ -105,6 +108,7 @@ async function getCategory(index,categories,sources){
 
         let product = document.createElement('div')
         product.classList.add('product')
+        product.id = i
         let category  = document.createElement('div')
         category.classList.add('category')
         let productName = document.createElement('div')
@@ -193,6 +197,10 @@ async function getCategory(index,categories,sources){
         product.appendChild(imageSrc)
         product.appendChild(coupangPrice)
         product.appendChild(wowPrice)
+
+        product.setAttribute("draggable","true") //드래그 기능 추가
+        product.addEventListener('dragstart',dragstart,false)  //드래그 이벤트 추가
+
         //카테고리 분류하고 category 키에 배열을 값으로 추가. 배열안에 i값을 저장(삭제할 때 필요)
         console.log(product)
         return product
@@ -255,3 +263,15 @@ function removeAll(){
 
 }
 
+function dragstart(e){
+    console.log('drag_start')
+    console.log(e)
+    e.dataTransfer.setData('targetId',e.target.id);
+    //data transfer에 대해 다시 봐야할듯
+}
+function drop(e){
+    console.log("drop");
+    e.preventDefault();
+    let targetId = e.dataTransfer.getData('targetId');
+    e.target.appendChild(document.getElementById(targetId));
+}

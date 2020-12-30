@@ -13,7 +13,8 @@ We are currently developing it for use in Coupang.
 
 # Run
 
-![k77Bh9aVXM](https://user-images.githubusercontent.com/56781342/102679661-88ed2280-41f4-11eb-85a5-9caff9ecead6.gif)
+![MVYIAXzjmR](https://user-images.githubusercontent.com/56781342/103151111-85423880-47be-11eb-9caa-4952b4fe662a.gif)
+
 
 
 # Program diagram

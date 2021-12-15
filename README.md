@@ -8,6 +8,8 @@
 
 Google webstore : https://chrome.google.com/webstore/detail/shopping-table/kbiolclnojgjpnkhflpakamkpnakpdbm?hl=ko
 
+<br/>
+
 
 # About the Project :art:
 
@@ -18,6 +20,9 @@ Google webstore : https://chrome.google.com/webstore/detail/shopping-table/kbiol
 일반가격, 와우회원가, 로켓 배송, 로켓 프레시의 정보들을 함께 확인할 수 있습니다.
 
 카트에 담긴 물품의 그림을 누르면 해당 상품페이지로 이동합니다.
+
+
+<br/>
 
 
 
